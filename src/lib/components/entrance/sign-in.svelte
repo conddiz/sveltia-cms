@@ -112,26 +112,38 @@
       {/if}
       <Spacer />
     {/if}
-    <Button
-      variant={showLocalBackendOption ? 'secondary' : 'primary'}
-      label={isTestRepo
-        ? _('work_with_test_repo')
-        : _('sign_in_with_x', { values: { service: signInServiceLabel } })}
-      disabled={signInDisabled}
-      onclick={async () => {
-        await signInManually(backendName);
-      }}
-    />
-    {#if !isTestRepo}
+    <div role="none" class="signin-row">
+      <div role="none" class="signin-col">
+        <span class="signin-label">{_('sign_in_with')}</span>
+        <div role="none" class="signin-pair">
+          <Button
+            variant="primary"
+            label={isTestRepo ? _('work_with_test_repo') : signInServiceLabel}
+            disabled={signInDisabled}
+            onclick={async () => {
+              await signInManually(backendName);
+            }}
+          />
+          {#if !isTestRepo}
+            <Button
+              variant="secondary"
+              label="Token"
+              disabled={tokenAuthDisabled}
+              onclick={() => {
+                showTokenDialog = true;
+              }}
+            />
+          {/if}
+        </div>
+      </div>
       <Button
-        variant="secondary"
-        label={_('sign_in_using_access_token', { values: { service: signInServiceLabel } })}
-        disabled={tokenAuthDisabled}
+        variant="ghost"
+        label={_('back_to_home')}
         onclick={() => {
-          showTokenDialog = true;
+          window.location.href = '/';
         }}
       />
-    {/if}
+    </div>
   {/if}
   {#if auth.signInError.message && auth.signInError.context === 'authentication'}
     <div role="alert" class="error iconic">
@@ -170,9 +182,33 @@
 
     :global {
       .button {
-        width: 320px;
+        min-width: 130px;
       }
     }
+  }
+
+  .signin-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .signin-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .signin-label {
+    font-size: 13px;
+    color: var(--sui-secondary-foreground-color);
+  }
+
+  .signin-pair {
+    display: flex;
+    gap: 12px;
   }
 
   [role='alert'] {

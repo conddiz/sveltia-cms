@@ -20,6 +20,8 @@ signed_in_as_x: Conectado como {$name}
 working_with_local_repo: Trabalhando com repositório local
 working_with_test_repo: Trabalhando com repositório de teste
 sign_out: Sair
+sign_in_with: "Entrar com:"
+back_to_home: Voltar ao início
 create: Novo
 select: Selecionar
 select_all: Selecionar tudo
