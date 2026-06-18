@@ -136,13 +136,19 @@
           {/if}
         </div>
       </div>
-      <Button
-        variant="ghost"
-        label={_('back_to_home')}
-        onclick={() => {
-          window.location.href = '/';
-        }}
-      />
+      <div role="none" class="back-home">
+        <Button
+          variant="ghost"
+          label={_('back_to_home')}
+          onclick={() => {
+            window.location.href = '/';
+          }}
+        >
+          {#snippet startIcon()}
+            <Icon name="home" />
+          {/snippet}
+        </Button>
+      </div>
     </div>
   {/if}
   {#if auth.signInError.message && auth.signInError.context === 'authentication'}
@@ -209,6 +215,10 @@
   .signin-pair {
     display: flex;
     gap: 12px;
+  }
+
+  .back-home :global(.button) {
+    border: 1px solid var(--sui-control-border-color, rgba(127, 127, 127, 0.4));
   }
 
   [role='alert'] {
